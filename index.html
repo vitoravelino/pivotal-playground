@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Pivotal Tracker Projects</h1>
+    </header>
+
+    <div id="main" class="main">
+      <section id="login" class="login">
+        <span class="error"></span>
+        <form id="user-form" class="user-form">
+          <fieldset>
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" />
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" />
+          </fieldset>
+          <input type="submit" value="Login" />
+        </form>
+
+        <form id="token-form" class="token-form">
+          <fieldset>
+            <label for="token">API Token</label>
+            <input id="token" type="text" name="token" />
+          </fieldset>
+          <input type="submit" value="Login" />
+        </form>
+      </section>
+    </div>
+
+    <script type="text/template" id="projects-template">
+      <section id="projects" class="projects">
+        <p>Hi, you have <%- projects.length %> project(s)!</p>
+        <ul class="projects-list">
+        <% _.each(projects, function(project, index) { %>
+          <li id="project-<%- project.id %>" class="project">
+            <img class="preloader" src="img/preloader.gif" alt="Loading..." title="Loading..." />
+          </li>
+        <% }); %>
+        </ul>
+      </section>
+    </script>
+
+    <script type="text/template" id="project-template">
+      <h3><a href="https://www.pivotaltracker.com/projects/<%- project.id %>" target="_blank"><%- project.name %></a></h3>
+
+      <div class="fleft">
+        <dl class="project-details">
+          <dt>Project details</dt>
+          <dd>Started at <%- project.startDate %></dd>
+          <dd><%- project.iterations.length %> iteration(s)</dd>
+          <dd><%- project.membersLength %> member(s)</dd>
+        </dl>
+      </div>
+
+      <div class="fright">
+        <dl class="current-iteration iteration-details">
+          <dt>Current iteration (#<%- project.currentIteration().id %>)</dt>
+          <dd class="green"><%- project.currentIteration().accepted().length %> accepted</dd>
+          <dd class="red"><%- project.currentIteration().rejected().length %> rejected</dd>
+          <dd class="gray"><%- project.currentIteration().started().length %> started</dd>
+          <dd class="gray"><%- project.currentIteration().unstarted().length %> unstarted</dd>
+          <dd class="bold">Total of <%- project.currentIteration().stories.length %></dd>
+        </dl>
+      </div> <!-- .current-iteration -->
+    </script>
+
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
+    <script src="js/vendor/lodash-0.8.2.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
